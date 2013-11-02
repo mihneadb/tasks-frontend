@@ -11,8 +11,10 @@ App.IndexRoute = Ember.Route.extend({
 });
 
 App.IndexController = Ember.Controller.extend({
-  login: function () {
-    console.log('clicked22');
+  actions: {
+    login: function () {
+      console.log('clicked22');
+    }
   }
 });
 
