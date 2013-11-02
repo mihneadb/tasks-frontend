@@ -31,8 +31,21 @@ function main() {
           localStorage.setItem("gapi_token", token.access_token);
           that.transitionTo('home')
         });
-      }
+      },
+      createList: function createList (data) {
+        console.log(data);
+      },      
     }
+  });
+
+  App.HomeController = Ember.ObjectController.extend({
+    actions: {
+      createList: function createList () {
+        var title = $('.js-handler--newlistname').val();
+        title.val("");
+        App.TaskList.create({title: title}).save()
+      },      
+    } 
   });
 
   App.CustomAdapter = Ember.RESTAdapter.extend({
