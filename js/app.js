@@ -93,6 +93,8 @@ function main() {
             due: Ember.attr(),
             completed: Ember.attr(),
             deleted: Ember.attr(),
+            updated: Ember.attr(),
+            position: Ember.attr(),
             hidden: Ember.attr(),
         });
         model.url = "https://www.googleapis.com/tasks/v1/lists/" + id + "/tasks";
@@ -112,6 +114,18 @@ function main() {
         }
     });
 
+
+    function sortByPosition (a, b) {
+        var pa = a.get("position");
+        var pb = b.get("position");
+        if (pa < pb) {
+            return -1;
+        } else if (pa > pb) {
+            return 1;
+        }
+        return 0;
+    }
+
     App.ListController = Ember.ArrayController.extend({
         actions: {
             createTask: function createTask() {
@@ -120,6 +134,9 @@ function main() {
                 input.val("");
             }
         },
+
+        all: Ember.computed.sort("[]", sortByPosition),
+
         incomplete: Ember.computed.filter("[]", function(task) {
             return task.get("status") == "needsAction";
         })
