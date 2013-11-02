@@ -10,3 +10,13 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
+
+function auth() {
+  var config = {
+    'client_id': '724598683708.apps.googleusercontent.com',
+    'scope': 'https://www.googleapis.com/auth/tasks'
+  };
+  gapi.auth.authorize(config, function() {
+  });
+}
+
