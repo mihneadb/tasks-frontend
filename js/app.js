@@ -12,7 +12,6 @@ function GoogleLoaded() {
 }
 
 function main() {
-
     App = Ember.Application.create();
 
     App.Router.map(function() {
@@ -33,27 +32,10 @@ function main() {
         }
     });
 
-    var currentTaskListId = null;
-    App.TasksModels = {};
-    App.ListRoute = Ember.Route.extend({
-        model: function(params) {
-            currentTaskListId = params.tasklist_id;
-            makeTasksModel(params.tasklist_id);
-            return App.TasksModels[params.tasklist_id].findAll();
-        }
-    });
-
-    App.ListController = Ember.ArrayController.extend({
-        actions: {
-            createTask: function createTask() {
-                var input = $('.js-handler--newtasktitle');
-                App.TasksModels[currentTaskListId].create({title: input.val()}).save();
-                input.val("");
-            }
+    App.HomeRoute = Ember.Route.extend({
+        model: function() {
+            return App.TaskList.findAll();
         },
-        incomplete: Ember.computed.filter("[]", function(task) {
-            return task.get("status") == "needsAction";
-        })
     });
 
     App.HomeController = Ember.ObjectController.extend({
@@ -65,6 +47,7 @@ function main() {
             },
         }
     });
+
 
     App.CustomAdapter = Ember.RESTAdapter.extend({
         ajaxSettings: function(url, method) {
@@ -88,7 +71,6 @@ function main() {
             }
         },
     });
-
     App.TaskList = Ember.Model.extend({
         id: Ember.attr(),
         title: Ember.attr(),
@@ -98,6 +80,7 @@ function main() {
     App.TaskList.adapter = App.CustomAdapter.create();
     App.TaskList.collectionKey = "items";
 
+    App.TasksModels = {};
     function makeTasksModel(id) {
         var model = Ember.Model.extend({
             id: Ember.attr(),
@@ -117,14 +100,25 @@ function main() {
         return model;
     }
 
-
-    // .create({title: "Title"}).save()
-
-
-    App.HomeRoute = Ember.Route.extend({
-        model: function() {
-            return App.TaskList.findAll();
-        },
+    var currentTaskListId = null;
+    App.ListRoute = Ember.Route.extend({
+        model: function(params) {
+            currentTaskListId = params.tasklist_id;
+            makeTasksModel(params.tasklist_id);
+            return App.TasksModels[params.tasklist_id].findAll();
+        }
     });
 
+    App.ListController = Ember.ArrayController.extend({
+        actions: {
+            createTask: function createTask() {
+                var input = $('.js-handler--newtasktitle');
+                App.TasksModels[currentTaskListId].create({title: input.val()}).save();
+                input.val("");
+            }
+        },
+        incomplete: Ember.computed.filter("[]", function(task) {
+            return task.get("status") == "needsAction";
+        })
+    });
 }
