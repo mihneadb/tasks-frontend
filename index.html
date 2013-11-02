@@ -36,6 +36,11 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="list">
+    <p>
+        <input type="text" placeholder="New task" class="js-handler--newtasktitle">
+        <button
+        {{action 'createTask'}}>Create</button>
+    </p>
     <h3>Incomplete:</h3>
     <ul>
         {{#each incomplete}}

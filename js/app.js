@@ -29,32 +29,39 @@ function main() {
           localStorage.setItem("gapi_token", token.access_token);
           that.transitionTo('home')
         });
-      },
-      createList: function createList (data) {
-      },
+      }
     }
   });
 
+  var currentTaskListId = null;
   App.TasksModels = {};
   App.ListRoute = Ember.Route.extend({
     model: function(params) {
+      currentTaskListId = params.tasklist_id;
       makeTasksModel(params.tasklist_id);
       return App.TasksModels[params.tasklist_id].findAll();
     }
   });
 
   App.ListController = Ember.ArrayController.extend({
-    incomplete: Ember.computed.filter("[]", function(task) {
-      return task.get("status") == "needsAction";
-    })
+      actions: {
+          createTask: function createTask() {
+              var input = $('.js-handler--newtasktitle');
+              App.TasksModels[currentTaskListId].create({title: input.val()}).save();
+              input.val("");
+          }
+      },
+      incomplete: Ember.computed.filter("[]", function(task) {
+          return task.get("status") == "needsAction";
+      })
   });
 
   App.HomeController = Ember.ObjectController.extend({
     actions: {
       createList: function createList () {
-        var title = $('.js-handler--newlistname')
-        App.TaskList.create({title: title.val()}).save()
-        title.val("");
+        var input = $('.js-handler--newlistname');
+        App.TaskList.create({title: input.val()}).save();
+        input.val("");
       },
     }
   });
