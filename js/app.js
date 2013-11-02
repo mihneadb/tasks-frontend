@@ -12,6 +12,7 @@ function GoogleLoaded() {
 }
 
 function main() {
+    $("#spinner").remove();
     App = Ember.Application.create();
 
     App.Router.map(function() {
