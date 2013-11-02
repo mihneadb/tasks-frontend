@@ -17,7 +17,9 @@ function main() {
   App = Ember.Application.create();
 
   App.Router.map(function() {
-    this.resource('home');
+    this.resource('home', function() {
+      this.resource("list", { path: ":tasklist_id" });
+    });
   });
 
   App.IndexRoute = Ember.Route.extend({
@@ -33,17 +35,24 @@ function main() {
         });
       },
       createList: function createList (data) {
-        console.log(data);
       },      
+    }
+  });
+
+  App.TasksModels = {};
+  App.ListRoute = Ember.Route.extend({
+    model: function(params) {
+      makeTasksModel(params.tasklist_id);
+      return App.TasksModels[params.tasklist_id].findAll();
     }
   });
 
   App.HomeController = Ember.ObjectController.extend({
     actions: {
       createList: function createList () {
-        var title = $('.js-handler--newlistname').val();
+        var title = $('.js-handler--newlistname')
+        App.TaskList.create({title: title.val()}).save()
         title.val("");
-        App.TaskList.create({title: title}).save()
       },      
     } 
   });
@@ -80,8 +89,6 @@ function main() {
   App.TaskList.adapter = App.CustomAdapter.create();
   App.TaskList.collectionKey = "items";
 
-  App.TasksModels = {};
-
   function makeTasksModel(id) {
     var model = Ember.Model.extend({
       id: Ember.attr(),
@@ -97,8 +104,7 @@ function main() {
     model.url = "https://www.googleapis.com/tasks/v1/lists/" + id + "/tasks";
     model.adapter = App.CustomAdapter.create();
     model.collectionKey = "items";
-    App.TaskModels[id] = model;
-    console.log(model);
+    App.TasksModels[id] = model;
     return model;
   }
 
