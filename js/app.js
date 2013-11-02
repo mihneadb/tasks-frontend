@@ -35,7 +35,7 @@ function main() {
         });
       },
       createList: function createList (data) {
-      },      
+      },
     }
   });
 
@@ -53,8 +53,8 @@ function main() {
         var title = $('.js-handler--newlistname')
         App.TaskList.create({title: title.val()}).save()
         title.val("");
-      },      
-    } 
+      },
+    }
   });
 
   App.CustomAdapter = Ember.RESTAdapter.extend({
