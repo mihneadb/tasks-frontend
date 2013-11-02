@@ -11,7 +11,6 @@ function GoogleLoaded() {
   });
 }
 
-var r;
 function main() {
 
   App = Ember.Application.create();
@@ -45,6 +44,12 @@ function main() {
       makeTasksModel(params.tasklist_id);
       return App.TasksModels[params.tasklist_id].findAll();
     }
+  });
+
+  App.ListController = Ember.ArrayController.extend({
+    incomplete: Ember.computed.filter("[]", function(task) {
+      return task.get("status") == "needsAction";
+    })
   });
 
   App.HomeController = Ember.ObjectController.extend({

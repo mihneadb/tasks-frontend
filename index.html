@@ -36,9 +36,17 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="list">
+<h3>Incomplete:</h3>
     <ul>
-    {{#each item in model}}
-      <li>{{item.title}}</li>
+    {{#each incomplete}}
+      <li>{{title}}</li>
+    {{/each}}
+    </ul>
+
+<h3>All:</h3>
+    <ul>
+    {{#each}}
+      <li>{{title}}</li>
     {{/each}}
     </ul>
   </script>
