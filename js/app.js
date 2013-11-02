@@ -22,9 +22,6 @@ function main() {
   });
 
   App.IndexRoute = Ember.Route.extend({
-    model: function() {
-      return ['red', 'yellow', 'blue'];
-    },
     actions: {
       login: function auth() {
         that = this;
