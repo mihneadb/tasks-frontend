@@ -13,8 +13,12 @@
     {{outlet}}
   </script>
 
+  <script type="text/x-handlebars" data-template-name="home">
+    <p>Hello</p>
+  </script>
+
   <script type="text/x-handlebars" data-template-name="index">
-    <a href="#" {{action 'login'}}>Login</a>
+    <a href="#" {{action 'login'}} class="js-handerl--login">Login</a>
     <ul>
     {{#each item in model}}
       <li>{{item}}</li>

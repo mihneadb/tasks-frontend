@@ -1,19 +1,23 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-  // put your routes here
+  this.resource('home');
 });
 
 App.IndexRoute = Ember.Route.extend({
   model: function() {
     return ['red', 'yellow', 'blue'];
-  }
-});
-
-App.IndexController = Ember.Controller.extend({
+  },
   actions: {
-    login: function () {
-      console.log('clicked22');
+    login: function auth() {
+      var config = {
+        'client_id': '724598683708.apps.googleusercontent.com',
+        'scope': 'https://www.googleapis.com/auth/tasks'
+      };
+      that = this;
+      gapi.auth.authorize(config, function() {
+        that.transitionTo('home')
+      });
     }
   }
 });
@@ -26,15 +30,6 @@ function getListsOfTasks() {
   gapi.client.request({
     'path': '/tasks/v1/users/@me/lists',
     'callback': printTaskLists
-  });
-}
-
-function auth() {
-  var config = {
-    'client_id': '724598683708.apps.googleusercontent.com',
-    'scope': 'https://www.googleapis.com/auth/tasks'
-  };
-  gapi.auth.authorize(config, function() {
   });
 }
 
