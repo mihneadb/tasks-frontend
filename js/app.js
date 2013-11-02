@@ -74,11 +74,33 @@ function main() {
   App.TaskList = Ember.Model.extend({
     id: Ember.attr(),
     title: Ember.attr(),
+    selfLink: Ember.attr(),
   });
-
   App.TaskList.url = "https://www.googleapis.com/tasks/v1/users/@me/lists";
   App.TaskList.adapter = App.CustomAdapter.create();
   App.TaskList.collectionKey = "items";
+
+  App.TasksModels = {};
+
+  function makeTasksModel(id) {
+    var model = Ember.Model.extend({
+      id: Ember.attr(),
+      title: Ember.attr(),
+      selfLink: Ember.attr(),
+      notes: Ember.attr(),
+      status: Ember.attr(),
+      due: Ember.attr(),
+      completed: Ember.attr(),
+      deleted: Ember.attr(),
+      hidden: Ember.attr(),
+    });
+    model.url = "https://www.googleapis.com/tasks/v1/lists/" + id + "/tasks";
+    model.adapter = App.CustomAdapter.create();
+    model.collectionKey = "items";
+    App.TaskModels[id] = model;
+    console.log(model);
+    return model;
+  }
 
 
   // .create({title: "Title"}).save()
