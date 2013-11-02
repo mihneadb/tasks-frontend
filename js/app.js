@@ -148,12 +148,7 @@ function main() {
     function sortByPosition (a, b) {
         var pa = a.get("position");
         var pb = b.get("position");
-        if (pa < pb) {
-            return -1;
-        } else if (pa > pb) {
-            return 1;
-        }
-        return 0;
+        return pa - pb;
     }
 
     App.ListController = Ember.ArrayController.extend({
