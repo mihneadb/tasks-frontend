@@ -80,6 +80,7 @@ function main() {
     App.TaskList.url = "https://www.googleapis.com/tasks/v1/users/@me/lists";
     App.TaskList.adapter = App.CustomAdapter.create();
     App.TaskList.collectionKey = "items";
+    App.TaskList.primaryKey = "id";
 
     App.TasksModels = {};
     function makeTasksModel(id) {
@@ -97,6 +98,7 @@ function main() {
         model.url = "https://www.googleapis.com/tasks/v1/lists/" + id + "/tasks";
         model.adapter = App.CustomAdapter.create();
         model.collectionKey = "items";
+        model.primaryKey = "id";
         App.TasksModels[id] = model;
         return model;
     }
