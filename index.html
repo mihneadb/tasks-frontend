@@ -10,11 +10,11 @@
 
   <script type="text/x-handlebars">
   <h2>Welcome to Ember.js</h2>
-    <a href="#" {{action 'login'}}>Login</a>  
     {{outlet}}
   </script>
 
   <script type="text/x-handlebars" data-template-name="index">
+    <a href="#" {{action 'login'}}>Login</a>
     <ul>
     {{#each item in model}}
       <li>{{item}}</li>

@@ -12,9 +12,9 @@ App.IndexRoute = Ember.Route.extend({
 
 App.IndexController = Ember.Controller.extend({
   login: function () {
-    console.log('clicked');
+    console.log('clicked22');
   }
-})
+});
 
 function printTaskLists(json) {
   console.log(json);
