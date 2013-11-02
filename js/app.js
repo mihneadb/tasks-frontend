@@ -16,6 +16,16 @@ App.IndexController = Ember.Controller.extend({
   }
 })
 
+function printTaskLists(json) {
+  console.log(json);
+}
+
+function getListsOfTasks() {
+  gapi.client.request({
+    'path': '/tasks/v1/users/@me/lists',
+    'callback': printTaskLists
+  });
+}
 
 function auth() {
   var config = {
