@@ -1,12 +1,42 @@
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith
+if (!String.prototype.endsWith) {
+    Object.defineProperty(String.prototype, 'endsWith', {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: function (searchString, position) {
+            position = position || this.length;
+            position = position - searchString.length;
+            var lastIndex = this.lastIndexOf(searchString);
+            return lastIndex !== -1 && lastIndex === position;
+        }
+    });
+}
+
 var gapiConfig = {
     'client_id': '724598683708.apps.googleusercontent.com',
     'scope': 'https://www.googleapis.com/auth/tasks',
 };
 
 function GoogleLoaded() {
+    var href = window.location.href;
+    var host = window.location.host;
+    var isIndex = href.substring(0, href.length - 1).endsWith(host);
+
+    if (window.location.pathname === "/" && isIndex) {
+        return main();
+    }
+
     gapiConfig.immediate = true;
-    gapi.auth.authorize(gapiConfig, function() {
-        gapiConfig.immediate = false;
+    gapi.auth.authorize(gapiConfig, function(token) {
+        if (token === null) {
+            // didn't work, need to relogin
+            gapiConfig.immediate = false;
+            gapi.auth.authorize(gapiConfig, function(token) {
+                // save new token
+                localStorage.setItem("gapi_token", token.access_token);
+            })
+        }
         main();
     });
 }
