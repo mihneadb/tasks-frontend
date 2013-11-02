@@ -10,6 +10,12 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
+App.IndexController = Ember.Controller.extend({
+  login: function () {
+    console.log('clicked');
+  }
+})
+
 
 function auth() {
   var config = {
