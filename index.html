@@ -12,23 +12,25 @@
 <img src="http://www.fbi.gov/spinner.gif" alt="Spinner" id="spinner"/>
 
 <script type="text/x-handlebars">
-    <h2>Tasks Frontend</h2>
-    {{outlet}}
+    <div class="row large-centered large-10 small-12 columns" id="site-container">
+        <h2>Tasks Frontend</h2>
+        {{outlet}}
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="home">
-    <p>Lists:</p>
-    {{#each item in model}}
-    {{#link-to 'list' item.id}}<p>{{item.title}}</p>{{/link-to}}
-    {{/each}}
-    <p>
-        <input type="text" placeholder="New list name" class="js-handler--newlistname">
-        <button {{action 'createList'}}>Create</button>
-    </p>
+    <div class="large-4 small-12 columns" id="div-tasklists">
+        <h2>Lists:</h2>
+        {{#each item in model}}
+        {{#link-to 'list' item.id}}<p>{{item.title}}</p>{{/link-to}}
+        {{/each}}
+        <p>
+            <input type="text" placeholder="New list name" class="js-handler--newlistname">
+            <button {{action 'createList'}}>Create</button>
+        </p>
+    </div>
 
-    <h2>Tasks:</h2>
-
-    <div class="tasks">
+    <div class="large-8 small-12 columns" id="div-tasks">
         {{outlet}}
     </div>
 </script>
@@ -39,6 +41,7 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="list">
+    <h2>Tasks:</h2>
     <p>
         <input type="text" placeholder="New task" class="js-handler--newtasktitle">
         <button
