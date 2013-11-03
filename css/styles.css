@@ -1,0 +1,15 @@
+.task-categories li {
+  display: inline-block;
+  list-style: none;
+
+}
+
+.task-categories li a {
+  margin: 0 .5rem;
+  padding: .5rem;
+  border-bottom: 3px solid #fff;
+}
+
+.task-categories li a.active {
+  border-bottom: 3px solid #82D965;
+}

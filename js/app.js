@@ -70,11 +70,22 @@ function main() {
     });
 
     App.HomeController = Ember.ObjectController.extend({
+      newListToggle: false,
+      addList: function () {
+        this.set('newListToggle', true);
+      },
+      doneAddingList: function () {
+        this.set('newListToggle', false);
+      },
         actions: {
             createList: function createList () {
                 var input = $('.js-handler--newlistname');
                 App.TaskList.create({title: input.val()}).save();
                 input.val("");
+                this.set('newListToggle', false);
+            },
+            toggleCreateList: function toggleCreateList () {
+              this.set('newListToggle', true);
             },
         }
     });
@@ -136,6 +147,7 @@ function main() {
     }
 
     var currentTaskListId = null;
+
     App.ListRoute = Ember.Route.extend({
         model: function(params) {
             currentTaskListId = params.tasklist_id;
